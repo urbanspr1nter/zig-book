@@ -13,5 +13,6 @@ pub fn main() !void {
 
 A few things that you may notice when coming from C:
 * You import libraries and modules using `@import`. 
-* Printing is actually a pretty involved process.
+* Printing is actually a pretty involved process. We have to grab a hold of a `writer` object from `stdout`, followed by a call to `print` which handles formatted strings.
+* The 2nd argument to `print` is required, even if the string isn't formatted. In this case nothing is passed.
 
