@@ -35,3 +35,24 @@ x = 9;
 ```
 
 Basically, this is being explicit.
+
+Be careful about coercion of the `undefined` value to another type. One that occurs, as stated in docs, you can no longer detect that a value is `undefined`. `undefined` means something in Zig -- "Do not use me. Before using, please overwrite."
+
+## `const` vs `var`
+
+Generally better to use `const` rather than `var`. 
+
+## Identifiers
+
+Here are some rules to naming identifiers:
+1. They must start with an alphanumeric charactter.
+2. Identifiers may only contain alphanumeric characters, or underscores. 
+3. They can not be a reserved keyword.
+
+### Any other way to have other characters?
+
+Yes, you can declare variables using the `@""` syntax like this:
+
+```zig
+const test = @"funny#$identifier";
+```
