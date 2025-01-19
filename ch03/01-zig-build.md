@@ -2,6 +2,31 @@
 
 Zig build uses a `build.zig` file to declaratively build a graph on how to build your project.
 
+## Unit Tests
+
+```zig
+const std = @import("std");
+
+pub fn build(b: *std.Build) void {
+    const target: std.zig.CrossTarget = b.standardTargetOptions(.{});
+    const optimize: OptimizeMode = b.standardOptimizeOptions(.{});
+
+    const exe_unit_tests = b.addTest(.{
+        .root_source_file = b.path("src/main.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    exe_unit_tests.linkLibC();
+    exe_unit_tests.addIncludePath(b.path("src"));
+    exe_unit_tests.addCSourceFiles(.{ .root = b.path("src"), .files = &.{"c_string.c"} });
+
+    const run_exe_unit_tests = b.addRunArtifact(exe_unit_tests);
+
+    const test_step = b.step("test", "Run unit tests");
+    test_step.dependOn(&run_exe_unit_tests.step);
+}
+```
+
 ## Building a C Library
 
 One scenario which we can use the Zig build system for is to create a C library and build it withe Zig as opposed to using tools like CMake or regular Make files.
